@@ -16,10 +16,10 @@
         android:theme="@style/Theme.GUser"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name="com.fturkan.guser.ui.main.MainActivity"
+            android:name="com.fturkan.guser.ui.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
