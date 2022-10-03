@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fturkan.guser.ui.home.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeActivity">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:gravity="center_vertical"
+            android:background="@color/red_500"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/header_home_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/searchActivity_backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="5dp"
+                    android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                    app:tint="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/header_logo_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_github_logo"
+                        app:tint="@color/red_500" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="G-User"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/headerSearch_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/header_search_bg"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/searchActivity_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/header_search_bg"
+                        android:hint="Search for users..."
+                        android:paddingHorizontal="10dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="#A9A9A9"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/searchActivity_swiperefreshLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/searchUser_iv"
+                    visible="@{viewModel.userList.size() == 0}"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="150dp"
+                    android:src="@drawable/ic_baseline_person_search_24"
+                    android:visibility="visible"
+                    app:tint="#C9C9C9" />
+
+                <TextView
+                    android:id="@+id/searchActivity_searchTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="10dp"
+                    android:text="Search results"
+                    android:textColor="#5E5E5E"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:text="x search results" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/searchList_rv"
+                    visible="@{!viewModel.progressBar}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/searchProgressBar"
+            visible="@{viewModel.progressBar}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/red_700"
+            app:layout_constraintBottom_toBottomOf="@+id/searchActivity_swiperefreshLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
