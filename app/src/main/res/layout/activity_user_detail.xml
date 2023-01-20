@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:id="@+id/header_home_layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginVertical="10dp"
@@ -75,10 +75,10 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="end"
-                android:textOn=""
-                android:textOff=""
                 android:layout_margin="15dp"
-                android:background="@drawable/favorite_selector"/>
+                android:background="@drawable/favorite_selector"
+                android:textOff=""
+                android:textOn="" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userDetail_avatar"
@@ -110,22 +110,92 @@
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/userDetail_followInfo"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="50dp"
-                android:background="@drawable/circle_bg"
-                android:backgroundTint="@color/gray_1"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp"
-                android:text="5 Followers | 13 Following"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:paddingEnd="3dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_bg"
+                    android:backgroundTint="@color/gray_1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/userDetailTvFollowers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/circle_bg"
+                        android:backgroundTint="@color/red_700"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:text="534"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:text="Followers"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="5dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:paddingEnd="3dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_bg"
+                    android:backgroundTint="@color/gray_1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/userDetail_tvFollowing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/circle_bg"
+                        android:backgroundTint="@color/red_700"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:text="32"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:text="Following"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

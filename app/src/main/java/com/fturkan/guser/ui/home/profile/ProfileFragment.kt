@@ -14,10 +14,6 @@ class ProfileFragment : Fragment() {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -34,13 +30,14 @@ class ProfileFragment : Fragment() {
         viewModel.getUserDetail().observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.apply {
-                    Glide.with(this@ProfileFragment).load(it.avatar_url).into(userDetailAvatar)
-                    userDetailNameSurname.text = it.name
-                    userDetailUsername.text = it.login
-                    userDetailFollowInfo.text = "${it.followers} Followers | ${it.following} Following"
+                    Glide.with(this@ProfileFragment).load(it.avatar_url).into(fragmentProfileIvAvatar)
+                    fragmentProfileTvNameSurname.text = it.name
+                    fragmentProfileTvUsername.text = it.login
+                    fragmentProfileTvFollowers.text = it.followers
+                    fragmentProfileTvFollowing.text = it.following
 
-                    userDetailCardView.visibility = View.VISIBLE
-                    userDetailProgressBar.visibility = View.GONE
+                    fragmentProfileCvContainer.visibility = View.VISIBLE
+                    fragmentProfilePbLoading.visibility = View.GONE
                 }
             }
         }
@@ -50,7 +47,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
