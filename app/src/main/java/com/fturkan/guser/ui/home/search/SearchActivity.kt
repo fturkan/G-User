@@ -1,9 +1,9 @@
 package com.fturkan.guser.ui.home.search
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -46,21 +46,18 @@ class SearchActivity : AppCompatActivity() {
                 override fun onClick(data: User) {
                     startActivity(Intent(this@SearchActivity, UserDetailActivity::class.java).also {
                         it.putExtra(UserDetailActivity.EXTRA_USERNAME, data.login)
+                        it.putExtra(UserDetailActivity.EXTRA_AVATAR, data.avatar_url)
+                        it.putExtra(UserDetailActivity.EXTRA_UUID, data.id)
                     })
                 }
             })
 
             searchActivityEt.setOnKeyListener { view, i, keyEvent ->
-                if (keyEvent.action == KeyEvent.ACTION_UP || keyEvent.action == KeyEvent.KEYCODE_ENTER || keyEvent.action == KeyEvent.KEYCODE_DEL) {
+                if (keyEvent.action == KeyEvent.ACTION_UP || keyEvent.action == KeyEvent.ACTION_DOWN || keyEvent.action == KeyEvent.KEYCODE_ENTER || keyEvent.keyCode == KeyEvent.KEYCODE_DEL) {
                     searchUser(searchActivityEt.text.toString())
                     return@setOnKeyListener true
                 }
                 return@setOnKeyListener false
-            }
-
-            searchActivitySwiperefreshLayout.setOnRefreshListener {
-                searchActivitySwiperefreshLayout.isRefreshing = false
-                searchUser(searchQuery)
             }
 
             searchActivityBackButton.setOnClickListener {
@@ -88,8 +85,16 @@ class SearchActivity : AppCompatActivity() {
 
     private fun searchUser(query: String) {
         binding.apply {
-            activityViewModel.progressBar.value = true
-            activityViewModel.fetchSearchUsers(query)
+            if (query.isEmpty()) {
+                searchRecyclerViewAdapter.setUserList(arrayListOf())
+                searchUserIv.visible = true
+                searchUserIv.visibility = View.VISIBLE
+                searchActivitySearchTitle.visible = false
+                searchListRv.visible = false
+            } else {
+                activityViewModel.progressBar.value = true
+                activityViewModel.fetchSearchUsers(query)
+            }
         }
     }
 }

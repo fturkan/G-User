@@ -1,6 +1,5 @@
 package com.fturkan.guser.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -12,7 +11,7 @@ interface FavoriteUserDao {
     fun addToFavorite(user: FavoriteUser)
 
     @Query("SELECT * FROM favorite_user")
-    fun getFavoriteUser(): LiveData<List<FavoriteUser>>
+    fun getFavoriteUser(): List<FavoriteUser>
 
     @Query("SELECT count(*) FROM favorite_user WHERE favorite_user.uuid = :id")
     fun checkUser(id: Int): Int
