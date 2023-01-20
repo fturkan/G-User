@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.fturkan.guser.databinding.ActivityUserDetailBinding
 import kotlinx.coroutines.CoroutineScope
@@ -35,29 +34,37 @@ class UserDetailActivity : AppCompatActivity() {
 
         observeLiveData()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val count = activityViewModel.checkUser(uuid)
-            withContext(Dispatchers.Main) {
-                if (count != null){
-                    if (count > 0) {
-                        binding.userDetailFavoriteToggle.isChecked = true
-                        _isFavoriteChecked = true
-                    } else {
-                        binding.userDetailFavoriteToggle.isChecked = false
-                        _isFavoriteChecked = false
+        with(binding){
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val count = activityViewModel.checkUser(uuid)
+                withContext(Dispatchers.Main) {
+                    if (count != null){
+                        if (count > 0) {
+                            userDetailFavoriteToggle.isChecked = true
+                            _isFavoriteChecked = true
+                        } else {
+                            userDetailFavoriteToggle.isChecked = false
+                            _isFavoriteChecked = false
+                        }
                     }
                 }
             }
-        }
 
-        binding.userDetailFavoriteToggle.setOnClickListener {
-            _isFavoriteChecked = !_isFavoriteChecked
-            if (_isFavoriteChecked){
-                activityViewModel.addToFavorite(username, uuid)
-            } else {
-                activityViewModel.removeFromFavorite(uuid)
+            userDetailFavoriteToggle.setOnClickListener {
+                _isFavoriteChecked = !_isFavoriteChecked
+                if (_isFavoriteChecked){
+                    activityViewModel.addToFavorite(username, uuid)
+                } else {
+                    activityViewModel.removeFromFavorite(uuid)
+                }
+                userDetailFavoriteToggle.isChecked = _isFavoriteChecked
             }
-            binding.userDetailFavoriteToggle.isChecked = _isFavoriteChecked
+
+            headerHomeLayout.setOnClickListener {
+                onBackPressed()
+            }
+
         }
 
     }
@@ -69,7 +76,8 @@ class UserDetailActivity : AppCompatActivity() {
                     Glide.with(this@UserDetailActivity).load(it.avatar_url).into(userDetailAvatar)
                     userDetailNameSurname.text = it.name
                     userDetailUsername.text = it.login
-                    userDetailFollowInfo.text = "${it.followers} Followers | ${it.following} Following"
+                    userDetailTvFollowers.text = it.followers
+                    userDetailTvFollowing.text = it.following
 
                     userDetailCardView.visibility = View.VISIBLE
                     userDetailProgressBar.visibility = View.GONE

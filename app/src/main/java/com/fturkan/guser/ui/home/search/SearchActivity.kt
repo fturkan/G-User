@@ -1,5 +1,6 @@
 package com.fturkan.guser.ui.home.search
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -11,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fturkan.guser.R
 import com.fturkan.guser.adapter.SearchUserListAdapter
 import com.fturkan.guser.databinding.ActivitySearchBinding
-import com.fturkan.guser.adapter.UserListAdapter
 import com.fturkan.guser.data.model.User
 import com.fturkan.guser.ui.home.detail.UserDetailActivity
 import com.fturkan.guser.ui.visible
