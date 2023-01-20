@@ -52,6 +52,7 @@ dependencies {
     def glide_version = "4.13.2"
     def circle_imageview_version = "3.1.0"
     def koin_version = "3.2.0"
+    def lottie_version = "5.2.0"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -95,4 +96,7 @@ dependencies {
 
     // Circle Imageview
     implementation "de.hdodenhof:circleimageview:$circle_imageview_version"
+
+    // Lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
 }

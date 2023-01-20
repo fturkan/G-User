@@ -17,6 +17,7 @@ class UserDetailActivity : AppCompatActivity() {
     private lateinit var binding : ActivityUserDetailBinding
     private lateinit var activityViewModel: UserDetailViewModel
     private lateinit var username: String
+    private lateinit var avatar: String
     private var uuid: Int = 0
     private var _isFavoriteChecked = false
 
@@ -25,9 +26,10 @@ class UserDetailActivity : AppCompatActivity() {
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        activityViewModel = ViewModelProvider(this).get(UserDetailViewModel::class.java)
+        activityViewModel = ViewModelProvider(this)[UserDetailViewModel::class.java]
 
         username = intent.getStringExtra(EXTRA_USERNAME) ?: ""
+        avatar = intent.getStringExtra(EXTRA_AVATAR) ?: ""
         uuid = intent.getIntExtra(EXTRA_UUID, 0)
 
         activityViewModel.setUserDetail(username)
@@ -36,10 +38,10 @@ class UserDetailActivity : AppCompatActivity() {
 
         with(binding){
 
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Default).launch {
                 val count = activityViewModel.checkUser(uuid)
                 withContext(Dispatchers.Main) {
-                    if (count != null){
+                    if (count != null) {
                         if (count > 0) {
                             userDetailFavoriteToggle.isChecked = true
                             _isFavoriteChecked = true
@@ -54,7 +56,7 @@ class UserDetailActivity : AppCompatActivity() {
             userDetailFavoriteToggle.setOnClickListener {
                 _isFavoriteChecked = !_isFavoriteChecked
                 if (_isFavoriteChecked){
-                    activityViewModel.addToFavorite(username, uuid)
+                    activityViewModel.addToFavorite(username, uuid, avatar)
                 } else {
                     activityViewModel.removeFromFavorite(uuid)
                 }
@@ -69,7 +71,7 @@ class UserDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun observeLiveData(){
+    private fun observeLiveData() {
         activityViewModel.getUserDetail().observe(this) {
             if (it != null) {
                 binding.apply {
@@ -88,6 +90,7 @@ class UserDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
+        const val EXTRA_AVATAR = "extra_avatar"
         const val EXTRA_UUID = "extra_uuid"
     }
 }

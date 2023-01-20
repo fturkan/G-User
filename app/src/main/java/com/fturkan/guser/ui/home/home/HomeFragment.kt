@@ -20,8 +20,12 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeRecyclerViewAdapter = UserListAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,6 +49,7 @@ class HomeFragment : Fragment() {
                 override fun onClick(data: User) {
                     startActivity(Intent(requireActivity(), UserDetailActivity::class.java).also {
                         it.putExtra(UserDetailActivity.EXTRA_USERNAME, data.login)
+                        it.putExtra(UserDetailActivity.EXTRA_AVATAR, data.avatar_url)
                         it.putExtra(UserDetailActivity.EXTRA_UUID, data.id)
                     })
                 }
@@ -90,11 +95,4 @@ class HomeFragment : Fragment() {
         else binding.homeProgressBar.visibility = View.GONE
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 }
